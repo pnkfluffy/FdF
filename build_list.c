@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_line.c                                        :+:      :+:    :+:   */
+/*   build_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:58:32 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/17 23:44:17 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/18 03:14:53 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,26 @@ t_fdf	*populate(int x1, int x2, int y1, int y2)
 	return (line);
 }
 
+t_fdf	*addlist(t_fdf *list, int x, int y, char dir)
+{
+	t_fdf	*curr;
+
+	curr = list;
+	while (curr->next)
+		curr = curr->next;
+	if (dir == 'x')
+		curr->next = populate(x * SCALE, x * SCALE + SCALE, y * SCALE, y * SCALE);
+	else if (dir == 'y')
+		curr->next = populate(x * SCALE, x * SCALE, y * SCALE, y * SCALE + SCALE);
+	return(list);
+}
+
+t_fdf	*makelist(t_fdf *list, int x, int y)
+{
+	list = populate(x * SCALE, x * SCALE, y * SCALE, y * SCALE);
+	return (list);
+}
+
 // int main()
 // {
 // 	t_fdf	*line;
@@ -43,5 +63,5 @@ t_fdf	*populate(int x1, int x2, int y1, int y2)
 // 	return (0);
 // }
 
-// cc fdf.c minilibx_macos/libmlx.a libft/libft.a -framework OpenGL -framework AppKit
+// cc build_list.c build_grid.c minilibx_macos/libmlx.a libft/libft.a -framework OpenGL -framework AppKit
 

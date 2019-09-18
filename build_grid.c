@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:58:27 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/17 23:42:24 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/18 02:19:01 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	drawline(t_fdf *line, void *mlx, void *win)
 	x = line->x1;
 	y = line->slope * x + line->B;
 	prev_y = y;
-	printf("s: %0.3f\tx: %d\ty: %d\tB: %0.3f\n", line->slope, x, y, line->B);
+	printf("s: %0.3f\tx: %d\ty: %d\t\n", line->slope, x, y);
 	if (line->slope == 1)
 		while (y < line->y2)
 			mlx_pixel_put(mlx, win, x, y++, line->color);
@@ -47,7 +47,45 @@ void	drawline(t_fdf *line, void *mlx, void *win)
 		prev_y = y;
 		x++;
 	}
-	free(line);
+}
+
+void	redraw(t_fdf *line, void *mlx, void *win)
+{
+	while (line)
+	{
+		drawline(line, mlx, win);
+		line = line->next;
+	}
+}
+
+void	slant(t_fdf *start)
+{
+	t_fdf *curr;
+	int i;
+	int row;
+
+	i = 0;
+	row = 0;	
+	curr = start;
+	while (curr)
+	{
+		if (curr->slope == 1)
+			curr->x2 += SCALE / 2;
+		else if (curr->slope == 0)
+		{
+			if (i == GRIDSIZE)
+			{
+				i = 0;
+				row++;
+			}
+			i++;
+		}
+		curr->x1 += row * SCALE / 2;
+		curr->x2 += row * SCALE / 2;
+		curr->slope = (curr->y2 - curr->y1) / (curr->x2 - curr->x1);
+		curr->B = curr->y1 - (curr->slope * curr->x1);
+		curr = curr->next;
+	}
 }
 
 int	build_grid(int height, int width)
@@ -56,24 +94,28 @@ int	build_grid(int height, int width)
 	void	*win;
 	int		x;
 	int		y;
+	t_fdf	*line;
 
+	line = makelist(line, x, y);
+	x = -1;
+	y = -1;
 	if (!(mlx = mlx_init()))
 		return (0);
 	if (!(win = mlx_new_window(mlx, WINSIZE, WINSIZE, "mlx 42")))
 	 	return (0);
-	x = -1;
-	y = -1;
 	while (++y < height + 1)
 	{
 		while (++x < width + 1)
 		{
 			if (x != width)
-				drawline(populate(x * SCALE, x * SCALE + SCALE, y * SCALE, y * SCALE), mlx, win);
+				addlist(line, x, y, 'x');
 			if (y != height)
-				drawline(populate(x * SCALE, x * SCALE, y * SCALE, y * SCALE + SCALE), mlx, win);
+				addlist(line, x, y, 'y');
 		}
 		x = -1;
 	}
+	slant(line);
+	redraw(line, mlx, win);
 	mlx_key_hook(win, deal_key, (void *)0);
 	mlx_loop(mlx);
 	return (0);
@@ -81,6 +123,6 @@ int	build_grid(int height, int width)
 
 int main()
 {
-	build_grid(10, 10);
+	build_grid(GRIDSIZE, GRIDSIZE);
 	return (0);
 }
