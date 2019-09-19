@@ -6,17 +6,17 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:58:32 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/18 03:14:53 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/19 00:46:32 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_fdf	*populate(int x1, int x2, int y1, int y2)
+t_pnt	*populate(int x1, int x2, int y1, int y2)
 {
-	t_fdf	*line;
+	t_pnt	*line;
 
-	if (!(line = ft_memalloc(sizeof(t_fdf))))
+	if (!(line = ft_memalloc(sizeof(t_pnt))))
 		return (NULL);
 	line->x1 = (double)x1 + SCALE;
 	line->x2 = (double)x2 + SCALE;
@@ -32,9 +32,9 @@ t_fdf	*populate(int x1, int x2, int y1, int y2)
 	return (line);
 }
 
-t_fdf	*addlist(t_fdf *list, int x, int y, char dir)
+t_pnt	*addlist(t_pnt *list, int x, int y, char dir)
 {
-	t_fdf	*curr;
+	t_pnt	*curr;
 
 	curr = list;
 	while (curr->next)
@@ -46,7 +46,7 @@ t_fdf	*addlist(t_fdf *list, int x, int y, char dir)
 	return(list);
 }
 
-t_fdf	*makelist(t_fdf *list, int x, int y)
+t_pnt	*makelist(t_pnt *list, int x, int y)
 {
 	list = populate(x * SCALE, x * SCALE, y * SCALE, y * SCALE);
 	return (list);
@@ -54,7 +54,7 @@ t_fdf	*makelist(t_fdf *list, int x, int y)
 
 // int main()
 // {
-// 	t_fdf	*line;
+// 	t_pnt	*line;
 
 // 	line = populate(X_1, X_2, Y_1, Y_2);
 // 	drawline(line);

@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:58:24 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/18 02:35:30 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/19 02:23:48 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 #include <stdio.h>
 
 # define WINSIZE 1000
-# define GRIDSIZE 18
-# define SCALE 30
-# define START 10
+# define GRIDSIZE 25
+# define SCALE 20
+# define START 5
 
-typedef struct		s_fdf
+typedef struct		s_pnt
 {
 	double			x1;
 	double			x2;
@@ -34,17 +34,28 @@ typedef struct		s_fdf
 	double			z;
 	double			slope;
 	double			B;
+	int				row;
+	int				col;
 	int				color;
-	struct s_fdf	*next;
-}					t_fdf;
+	struct s_pnt	*next;
+	struct s_pnt	*down;	
+}					t_pnt;
+
+typedef struct		s_grid
+{
+	int				width;
+	int				height;
+	int				*numarray;
+}					t_grid;
+
 
 /*
 **	build_list.c
 */
 
-t_fdf	*addlist(t_fdf *list, int x, int y, char dir);
-t_fdf	*populate(int x1, int x2, int y1, int y2);
-t_fdf	*makelist(t_fdf *list, int x, int y);
+t_pnt	*addlist(t_pnt *list, int x, int y, char dir);
+t_pnt	*populate(int x1, int x2, int y1, int y2);
+t_pnt	*makelist(t_pnt *list, int x, int y);
 
 /*
 **	build_grid.c

@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:58:27 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/18 02:19:01 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/19 02:11:21 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	deal_key(int key)
 	return (key);
 }
 
-void	drawline(t_fdf *line, void *mlx, void *win)
+//remake to draw from one pnt to another
+void	drawline(t_pnt *line, void *mlx, void *win)
 {
 	int x;
 	int y;
@@ -49,7 +50,7 @@ void	drawline(t_fdf *line, void *mlx, void *win)
 	}
 }
 
-void	redraw(t_fdf *line, void *mlx, void *win)
+void	redraw(t_pnt *line, void *mlx, void *win)
 {
 	while (line)
 	{
@@ -58,9 +59,9 @@ void	redraw(t_fdf *line, void *mlx, void *win)
 	}
 }
 
-void	slant(t_fdf *start)
+void	slant(t_pnt *start)
 {
-	t_fdf *curr;
+	t_pnt *curr;
 	int i;
 	int row;
 
@@ -94,7 +95,7 @@ int	build_grid(int height, int width)
 	void	*win;
 	int		x;
 	int		y;
-	t_fdf	*line;
+	t_pnt	*line;
 
 	line = makelist(line, x, y);
 	x = -1;
