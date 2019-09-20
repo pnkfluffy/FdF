@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:58:24 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/19 02:23:48 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/19 22:03:32 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,40 @@
 # define SCALE 20
 # define START 5
 
+//	OLD?
+// typedef struct		s_pnt
+// {
+// 	double			x1;
+// 	double			x2;
+// 	double			y1;
+// 	double			y2;
+// 	double			z;
+// 	double			slope;
+// 	double			B;
+// 	int				row;
+// 	int				col;
+// 	int				color;
+// 	struct s_pnt	*next;
+// 	struct s_pnt	*down;	
+// }					t_pnt;
+
 typedef struct		s_pnt
-{
-	double			x1;
-	double			x2;
-	double			y1;
-	double			y2;
-	double			z;
-	double			slope;
-	double			B;
-	int				row;
-	int				col;
+{	int				pix_x;
+	int				pix_y;
+	int				x;
+	int				y;
+	int				z;
+	// double			slope;
+	// double			B;
 	int				color;
+	// int				max_x;
+	// int				max_y;
+	struct s_pnt	*up;
+	struct s_pnt	*down;
+	struct s_pnt	*left;
 	struct s_pnt	*next;
-	struct s_pnt	*down;	
 }					t_pnt;
+
 
 typedef struct		s_grid
 {
@@ -54,7 +73,7 @@ typedef struct		s_grid
 */
 
 t_pnt	*addlist(t_pnt *list, int x, int y, char dir);
-t_pnt	*populate(int x1, int x2, int y1, int y2);
+//t_pnt	*populate(int x1, int x2, int y1, int y2);
 t_pnt	*makelist(t_pnt *list, int x, int y);
 
 /*
