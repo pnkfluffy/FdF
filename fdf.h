@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:58:24 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/19 22:03:32 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/20 13:12:50 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define SCALE 20
 # define START 5
 
-//	OLD?
+// 	OLD?
 // typedef struct		s_pnt
 // {
 // 	double			x1;
@@ -53,9 +53,7 @@ typedef struct		s_pnt
 	int				color;
 	// int				max_x;
 	// int				max_y;
-	struct s_pnt	*up;
 	struct s_pnt	*down;
-	struct s_pnt	*left;
 	struct s_pnt	*next;
 }					t_pnt;
 
