@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:58:24 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/20 13:12:50 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/20 20:52:10 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,8 @@
 
 # define WINSIZE 1000
 # define GRIDSIZE 25
-# define SCALE 20
+# define SCALE 60
 # define START 5
-
-// 	OLD?
-// typedef struct		s_pnt
-// {
-// 	double			x1;
-// 	double			x2;
-// 	double			y1;
-// 	double			y2;
-// 	double			z;
-// 	double			slope;
-// 	double			B;
-// 	int				row;
-// 	int				col;
-// 	int				color;
-// 	struct s_pnt	*next;
-// 	struct s_pnt	*down;	
-// }					t_pnt;
 
 typedef struct		s_pnt
 {	int				pix_x;
@@ -51,8 +34,6 @@ typedef struct		s_pnt
 	// double			slope;
 	// double			B;
 	int				color;
-	// int				max_x;
-	// int				max_y;
 	struct s_pnt	*down;
 	struct s_pnt	*next;
 }					t_pnt;
@@ -60,22 +41,22 @@ typedef struct		s_pnt
 
 typedef struct		s_grid
 {
-	int				width;
-	int				height;
-	int				*numarray;
+	int				max_x;
+	int				max_y;
+	void			*mlx;
+	void			*win;
 }					t_grid;
 
 
 /*
-**	build_list.c
+**	calc_shit.c
 */
 
-t_pnt	*addlist(t_pnt *list, int x, int y, char dir);
-//t_pnt	*populate(int x1, int x2, int y1, int y2);
-t_pnt	*makelist(t_pnt *list, int x, int y);
-
-/*
-**	build_grid.c
-*/
-
+t_pnt	*calc_shit(t_pnt *head);
+int		deal_key(int key);
+t_grid	*initialize_grid();
+void	draw_points(t_pnt *head, t_grid *grid);
+void	draw_phat_points(t_pnt *head, t_grid *grid);
+void	draw_lines(t_pnt *head, t_grid *grid);
+void	draw_line(t_pnt *left, t_pnt *right, t_grid *grid);
 # endif

@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 02:30:25 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/20 15:12:53 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/20 20:53:41 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_strtohex(char *str)
 {
-	return (16777215);
+	return (167215);
 }
 
 t_pnt	*populate(int x, int y, char *z, t_pnt *above)
@@ -99,16 +99,18 @@ void	print_params(t_pnt	*head)
 	pnt = head;
 	while (pnt->next)
 	{
-		printf("x: %d  y: %d  z: %d  ptrdwn: %p  ptrnxt: %p\n", pnt->x, pnt->y, pnt->z, &pnt->down, &pnt->next);
+		if (pnt->down == NULL)
+			printf("NO\n");
+		printf("x: %d  y: %d  z: %d  pix_x: %d  pix_y: %d\n", pnt->x, pnt->y, pnt->z, pnt->pix_x, pnt->pix_y);
 		pnt = pnt->next;
 	}
-	printf("x: %d  y: %d  z: %d  ptrdwn: %p  ptrnxt: %p\n", pnt->x, pnt->y, pnt->z, &pnt->down, &pnt->next->next);
 }
 
 int	main(int ac, char **av)
 {
 	int		fd;
 	t_pnt	*head;
+	t_grid	*grid;
 
 	fd = open(av[1], O_RDONLY);
 	if (!(fd = open(av[1], O_RDONLY)) || ac != 2 || !(head = convert_check(fd)))
@@ -119,6 +121,14 @@ int	main(int ac, char **av)
 			ft_putstr("error\n");
 		return (0);
 	}
-	print_params(head);
+	calc_shit(head);
+//	print_params(head);
+	grid = initialize_grid();
+	draw_points(head, grid);
+	draw_phat_points(head, grid);
+//	draw_lines(head, grid);
+	mlx_loop(grid->mlx);
 	return (0);
 }
+
+//cc get_shit.c calc_shit.c minilibx_macos/libmlx.a libft/libft.a -framework OpenGL -framework AppKit
