@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:58:24 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/20 20:52:10 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/21 20:37:45 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,18 @@
 //DELETE
 #include <stdio.h>
 
-# define WINSIZE 1000
-# define GRIDSIZE 25
-# define SCALE 60
+# define WINX 1000
+# define WINY 1000
+# define SCALE 0.6
 # define START 5
 
 typedef struct		s_pnt
-{	int				pix_x;
-	int				pix_y;
+{
+	double			pix_x;
+	double			pix_y;
 	int				x;
 	int				y;
 	int				z;
-	// double			slope;
-	// double			B;
 	int				color;
 	struct s_pnt	*down;
 	struct s_pnt	*next;
@@ -41,12 +40,16 @@ typedef struct		s_pnt
 
 typedef struct		s_grid
 {
-	int				max_x;
-	int				max_y;
+	double			max_x;
+	double			max_y;
+	double			max_pnt_height;
+	double			scale;
 	void			*mlx;
 	void			*win;
 }					t_grid;
 
+
+void	print_params(t_pnt	*head);
 
 /*
 **	calc_shit.c

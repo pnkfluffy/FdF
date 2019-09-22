@@ -6,28 +6,11 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:04:55 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/20 20:49:05 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/21 19:30:55 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-t_pnt	*calc_shit(t_pnt *head)
-{
-	t_pnt	*pnt;
-	int		random;
-	
-	random = rand();
-	pnt = head;
-	while (pnt)
-	{
-		pnt->pix_x = pnt->x * SCALE + START;
-		pnt->pix_y = pnt->y * SCALE + START;
-		pnt->color = (pnt->z == 0) ? 115550 : pnt->z * random;
-		pnt = pnt->next;
-	}
-	return (head);
-}
 
 int	deal_key(int key)
 {
@@ -38,7 +21,91 @@ int	deal_key(int key)
 	return (key);
 }
 
-t_grid	*initialize_grid()
+int		calc_scale(t_pnt *head, t_grid *grid)
+{
+	t_pnt *pnt;
+	int scale;
+
+	pnt = head;
+	while (pnt->down)
+		pnt = pnt->down;
+	while (pnt->next)
+		pnt = pnt->next;
+	scale = grid->max_x * SCALE / pnt->x;
+	return (scale);	
+}
+
+void	scale_grid(t_pnt *head, t_grid *grid)
+{
+	t_pnt	*pnt;
+
+	grid->max_pnt_height = 0;
+	pnt = head;
+	while (pnt)
+	{
+		if (pnt->z > grid->max_pnt_height)
+			grid->max_pnt_height = pnt->z;
+		pnt->pix_x = pnt->x * grid->scale;
+		pnt->pix_y = pnt->y * grid->scale;
+		pnt = pnt->next;
+	}
+}
+
+//redo to true center, take pix_x and pix_y value and calc to get them 
+//same length from center/ boundaries of grid
+void	center_grid(t_pnt *head, t_grid *grid)
+{
+	t_pnt	*pnt;
+	double	x_shift;
+	double	y_shift;
+
+	pnt = head;
+	while (pnt->next)
+		pnt = pnt->next;
+	x_shift = (WINX - pnt->pix_x) / 2;
+	y_shift = (WINY - pnt->pix_y) / 2;
+	pnt = head;
+	while (pnt)
+	{
+		pnt->pix_x += x_shift;
+		pnt->pix_y += y_shift;
+		pnt = pnt->next;
+	}
+}
+
+void	spoof_height(t_pnt *head, t_grid *grid)
+{
+	t_pnt	*pnt;
+
+	pnt = head;
+	while (pnt)
+	{
+		if (pnt->z)
+		{
+			printf("x1: %f y1: %f\n", pnt->pix_x, pnt->pix_y);
+			pnt->pix_x += pnt->z * grid->scale / grid->max_pnt_height / 6;
+			pnt->pix_y -= pnt->z * grid->scale / grid->max_pnt_height / 2;
+			printf("x1: %f y1: %f\n", pnt->pix_x, pnt->pix_y);
+		}
+		pnt = pnt->next;
+	}
+}
+
+void	spoof_angle(t_pnt *head, t_grid *grid)
+{
+	t_pnt	*pnt;
+
+	pnt = head;
+	while (pnt)
+	{
+		pnt->pix_x += pnt->y * grid->scale / 2;
+		pnt = pnt->next;
+	}
+}
+
+//add function to set lowest z value to 0 and increase all others by that amount,
+//mlx doesn't handle negatives
+t_grid	*initialize_grid(t_pnt	*head)
 {
 	t_grid	*grid;
 
@@ -46,8 +113,15 @@ t_grid	*initialize_grid()
 		return (NULL);
 	if (!(grid->mlx = mlx_init()))
 		return (0);
-	if (!(grid->win = mlx_new_window(grid->mlx, WINSIZE, WINSIZE, "mlx 42")))
+	if (!(grid->win = mlx_new_window(grid->mlx, WINX, WINY, "mlx 42")))
 	 	return (0);
+	grid->max_x = WINX;
+	grid->max_y = WINY;
+	grid->scale = calc_scale(head, grid);
+	scale_grid(head, grid);
+	center_grid(head, grid);
+	// spoof_angle(head, grid);
+	spoof_height(head, grid);
 	mlx_key_hook(grid->win, &deal_key, (void *)0);
 	return (grid);
 }
@@ -93,7 +167,7 @@ void	draw_lines(t_pnt *head, t_grid *grid)
 		if (pnt->next->x != 0 && pnt->next)
 			(pnt->pix_x >= pnt->next->pix_x) ? draw_line(pnt->next, pnt, grid) : draw_line(pnt, pnt->next, grid);
 		if (pnt->down)
-			(pnt->pix_x >= pnt->down->pix_x) ? draw_line(pnt, pnt->down, grid) : draw_line(pnt->down, pnt, grid);
+			(pnt->pix_x > pnt->down->pix_x) ? draw_line(pnt->down, pnt, grid) : draw_line(pnt, pnt->down, grid);
 		pnt = pnt->next;
 	}
 }
