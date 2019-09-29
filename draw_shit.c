@@ -6,16 +6,11 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 16:18:51 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/26 13:05:47 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/28 22:19:26 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/*
-	char *dataadd = mlx_get_data_addr();
-	dataadd[(y * bpp  * image_width) + (x * bpp)] = mlx_get_color_value(color);
-*/
 
 int		color_line(t_line *line)
 {
@@ -33,6 +28,15 @@ int		color_line(t_line *line)
 	return (COMBINE(new_rgb[0], new_rgb[1], new_rgb[2]));
 }
 
+void	img_pixel_put(t_grid *grid, int x, int y, int color)
+{
+	t_img	*img;
+
+	img = grid->img;
+	if (x >= 0 && x <= WINX && y >= 0 && y < WINY)
+		img->data[(x * img->bpp * 4) / (img->bpp * sizeof(*img->data)) + (y * img->linesize / sizeof(*img->data))] = mlx_get_color_value(grid->mlx, color);
+}
+
 void	draw_line(t_line *line, t_grid *grid)
 {
 	int		x;
@@ -44,20 +48,20 @@ void	draw_line(t_line *line, t_grid *grid)
 	prev_y = y;
 	if (line->slope == 1)
 		while (y <= line->p2->pix_y)
-			mlx_pixel_put(grid->mlx, grid->win, x, y++, line->p1->color);
+			img_pixel_put(grid, x, y++, line->p1->color);
 	while (x <= line->p2->pix_x + 1)
 	{
 		y = line->slope * x + line->b;
 		if (line->slope == 0)
-			mlx_pixel_put(grid->mlx, grid->win, x, y, color_line(line));
+			img_pixel_put(grid, x, y, line->p1->color);
 		if (line->slope > 0)
 			while (prev_y <= y)
 				if (++prev_y >= line->p1->pix_y && prev_y <= line->p2->pix_y)
-					mlx_pixel_put(grid->mlx, grid->win, x, prev_y, line->p1->color);
+					img_pixel_put(grid, x, prev_y, line->p1->color);
 		if (line->slope < 0)
 			while (prev_y >= y)
 				if (--prev_y <= line->p1->pix_y && prev_y >= line->p2->pix_y - 2)
-					mlx_pixel_put(grid->mlx, grid->win, x, prev_y, line->p2->color);
+					img_pixel_put(grid, x, prev_y, line->p2->color);
 		prev_y = y;
 		x++;
 	}
@@ -66,13 +70,21 @@ void	draw_line(t_line *line, t_grid *grid)
 void	draw_lines(t_grid *grid)
 {
 	t_line	*line;
+	t_img	*img;
 
+	img = grid->img;
+	if (!(img->image))
+		img->image = mlx_new_image(grid->mlx, WINX, WINY);
+	img->data = mlx_get_data_addr(img->image, &img->bpp, &img->linesize, &img->end);
 	line = grid->first_line;
 	while (line)
 	{
 		draw_line(line, grid);
 		line = line->next;
 	}
+	mlx_put_image_to_window(grid->mlx, grid->win, img->image, 0, 0);
+	mlx_destroy_image(grid->mlx, img->image);
+	img->image = NULL;
 }
 
 void	draw_phat_points(t_pnt *head, t_grid *grid)

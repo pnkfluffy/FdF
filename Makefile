@@ -6,7 +6,7 @@
 #    By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 23:24:55 by jfelty            #+#    #+#              #
-#    Updated: 2019/09/26 00:34:39 by jfelty           ###   ########.fr        #
+#    Updated: 2019/09/28 17:49:39 by jfelty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ lib:
 #uses make command in library
 
 out:
-	@$(CC) $(CFLAGS) $(SRC) $(MLXLIB) $(LIBFT) $(MLXFLAGS) -o fdf
+	@$(CC) $(CFLAGS) $(SRC) $(MLXLIB) $(LIBFT) $(MLXFLAGS) -fsanitize=address -g -o fdf
 	@echo "FdF Generation Complete"
 
 clean:

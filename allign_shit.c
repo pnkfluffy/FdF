@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 00:33:43 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/26 01:06:43 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/29 00:04:55 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		calc_scale(t_pnt *head, t_grid *grid)
 	while (pnt->next)
 		pnt = pnt->next;
 	scale = grid->max_x * SCALE / pnt->x;
-	return (scale);	
+	return (scale);
 }
 
 void	scale_grid(t_pnt *head, t_grid *grid)

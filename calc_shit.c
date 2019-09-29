@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:04:55 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/26 00:55:25 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/29 00:04:40 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	spoof_height(t_pnt *head, t_grid *grid)
 	{
 		if (pnt->z)
 		{
-			pnt->pix_x += HEIGHTSCALE * pnt->z * grid->scale / grid->max_pnt_height / 6;
-			pnt->pix_y -= HEIGHTSCALE * pnt->z * grid->scale / grid->max_pnt_height / 2;
+			pnt->pix_x += grid->height * pnt->z * grid->scale / grid->max_pnt_height / 6;
+			pnt->pix_y -= grid->heightdrift * pnt->z * grid->scale / grid->max_pnt_height / 2;
 		}
 		pnt = pnt->next;
 	}
@@ -72,21 +72,6 @@ void	adjust_neg_z(t_pnt *head)
 	while (pnt)
 	{
 		pnt->z -= lowest;
-		pnt = pnt->next;
-	}
-}
-
-void	color_pts(t_pnt *head, t_grid *grid)
-{
-	t_pnt	*pnt;
-
-	pnt = head;
-	while (pnt)
-	{
-		pnt->color = (MAXCOLOR * (double)(pnt->z + 1) / grid->max_pnt_height);
-		if (grid->max_pnt_height == 0)
-			pnt->color = 0xFFFFFF;
-		//pnt->color = (pnt->z * 500) % 16777215;
 		pnt = pnt->next;
 	}
 }

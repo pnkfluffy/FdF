@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:58:24 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/26 14:03:24 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/29 00:15:53 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 
 # define WINX 1000
 # define WINY 1000
-# define SCALE .4
-# define START 5
-# define HEIGHTSCALE 20
+# define SCALE 0.5
+# define START 20
+# define HEIGHTSCALE 6
+# define HEIGHTDRIFT 4
 # define MAXCOLOR 16777215
 
 # define R(a) (a) >> 16
@@ -55,22 +56,35 @@ typedef struct		s_line
 	double			b;
 }					t_line;
 
+typedef struct		s_img
+{
+	int				end;
+	int				bpp;
+	int				linesize;
+	char			*data;	
+	void			*image;
+}					t_img;
+
+
 typedef struct		s_grid
 {
 	double			max_x;
 	double			max_y;
 	double			max_pnt_height;
 	double			scale;
+	double			pos;
+	double			height;
+	double			heightdrift;
 	void			*mlx;
 	void			*win;
 	struct s_line	*first_line;
+	struct s_img	*img;
 }					t_grid;
 
 /*
 **	fdf.c
 */
 
-int		main(int ac, char **av);
 t_grid	*initialize_grid(t_pnt	*head);
 
 /*
@@ -99,7 +113,6 @@ void	spoof_height(t_pnt *head, t_grid *grid);
 void	spoof_cool_angle(t_pnt *head, t_grid *grid);
 void	spoof_angle(t_pnt *head, t_grid *grid);
 void	adjust_neg_z(t_pnt *head);
-void	color_pts(t_pnt *head, t_grid *grid);
 
 /*
 **	line_shit.c
@@ -122,6 +135,6 @@ void	draw_points(t_pnt *head, t_grid *grid);
 **	hook_shit.c
 */
 
-int		deal_key(int key);
+int		hook_key(int key, t_grid *grid);
 
 # endif
