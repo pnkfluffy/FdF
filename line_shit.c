@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:46:38 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/25 23:36:10 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/30 22:36:26 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ t_line	*add_line(t_line *line, t_pnt *pnt1, t_pnt *pnt2)
 		line->p1 = pnt2;
 		line->p2 = pnt1;
 	}
-	line->len = sqrt(pow(pnt2->pix_x - pnt1->pix_x, 2) + pow(pnt2->pix_y - pnt1->pix_y, 2));
+	line->len = sqrt(pow(pnt2->pix_x - pnt1->pix_x, 2) + \
+	pow(pnt2->pix_y - pnt1->pix_y, 2));
 	line->dist = 0;
-	line->slope = (line->p1->pix_x == line->p2->pix_x ? 1 : (line->p2->pix_y - line->p1->pix_y) / (line->p2->pix_x - line->p1->pix_x));
+	line->slope = (line->p1->pix_x == line->p2->pix_x ? INT_MAX : \
+	(line->p2->pix_y - line->p1->pix_y) / (line->p2->pix_x - line->p1->pix_x));
 	line->b = (line->p1->pix_y) - (line->slope * line->p1->pix_x);
 	line->next = NULL;
 	return (line);
@@ -47,17 +49,66 @@ t_grid	*populate_lines(t_pnt *head, t_grid *grid)
 	{
 		if (pnt->next->x != 0 && pnt->next)
 		{
-			line->next = add_line(line, pnt, pnt->next);	
-//			printf("pnt1: (%3.1f, %3.1f)\t pnt2: (%3.1f, %3.1f)\t linelen: %f\n", pnt->pix_x, pnt->pix_y, pnt->next->pix_x, pnt->next->pix_y, line->len);
+			line->next = add_line(line, pnt, pnt->next);
 			line = line->next;
 		}
 		if (pnt->down)
 		{
 			line->next = add_line(line, pnt, pnt->down);
-//			printf("pnt1: (%3.1f, %3.1f)\t pnt2: (%3.1f, %3.1f)\t linelen: %f\n", pnt->pix_x, pnt->pix_y, pnt->next->pix_x, pnt->next->pix_y, line->len);
 			line = line->next;
 		}
 		pnt = pnt->next;
 	}
 	return (grid);
+}
+
+void	recalc_lines(t_line *line)
+{
+	t_line	*curr;
+	t_pnt	*tmp;
+
+	tmp = NULL;
+	curr = line;
+	while (curr)
+	{
+		if (curr->p1->pix_x > curr->p2->pix_x)
+		{
+			tmp = curr->p1;
+			curr->p1 = curr->p2;
+			curr->p2 = tmp;
+		}
+		curr->len = sqrt(pow(curr->p2->pix_x - curr->p1->pix_x, 2) + \
+		pow(curr->p2->pix_y - curr->p1->pix_y, 2));
+		curr->dist = 0;
+		curr->slope = (curr->p1->pix_x == curr->p2->pix_x ? INT_MAX : \
+		(curr->p2->pix_y - curr->p1->pix_y) / (curr->p2->pix_x - \
+		curr->p1->pix_x));
+		curr->b = (curr->p1->pix_y) - (curr->slope * curr->p1->pix_x);
+		curr = curr->next;
+	}
+}
+
+void	draw_lines(t_grid *grid)
+{
+	t_line	*line;
+	t_img	*img;
+
+	img = grid->img;
+	if (!(img->image))
+		img->image = mlx_new_image(grid->mlx, WINX, WINY);
+	img->data = mlx_get_data_addr(img->image, &img->bpp, \
+	&img->linesize, &img->end);
+	img->bpp = 4;
+	line = grid->first_line;
+	while (line)
+	{
+		if (line->slope != INT_MAX)
+			draw_line(line, grid);
+		else
+			draw_vert_line(line, grid);
+		line = line->next;
+	}
+	mlx_put_image_to_window(grid->mlx, grid->win, img->image, 0, 0);
+	mlx_destroy_image(grid->mlx, img->image);
+	img->image = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 02:30:25 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/26 00:23:30 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/30 16:57:35 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ t_pnt	*add_pnt(t_pnt *head, int x, int y, char *z)
 		if (!(pnt->next = populate(x, y, z, above)))
 			return (NULL);
 	}
-	else
-		if (!(head = populate(x, y, z, above)))
-			return (NULL);
+	else if (!(head = populate(x, y, z, above)))
+		return (NULL);
 	return (head);
 }
 
@@ -85,16 +84,4 @@ t_pnt	*convert_check(int fd)
 	while (get_next_line(fd, &nextline) > 0 && ++height)
 		head = parse_line(head, ft_strsplit(nextline, ' '), height);
 	return (head);
-}
-
-void	print_params(t_pnt	*head)
-{
-	t_pnt	*pnt;
-
-	pnt = head;
-	while (pnt->next)
-	{
-		printf("x: %d  y: %d  z: %d  pix_x: %3f  pix_y: %3f\n", pnt->x, pnt->y, pnt->z, pnt->pix_x, pnt->pix_y);
-		pnt = pnt->next;
-	}
 }

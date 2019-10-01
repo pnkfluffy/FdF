@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 00:33:43 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/29 00:04:55 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/09/30 20:32:54 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		calc_scale(t_pnt *head, t_grid *grid)
 {
-	t_pnt *pnt;
-	int scale;
+	t_pnt	*pnt;
+	int		scale;
 
 	pnt = head;
 	while (pnt->down)
@@ -60,4 +60,30 @@ void	center_grid(t_pnt *head, t_grid *grid)
 		pnt->pix_y += y_shift;
 		pnt = pnt->next;
 	}
+}
+
+int		boundary_check(t_grid *grid)
+{
+	t_pnt	*first;
+	t_pnt	*last;
+	t_pnt	*highest;
+	t_pnt	*lowest;
+
+	first = grid->first_line->p1;
+	last = first;
+	highest = first;
+	lowest = first;
+	while (last->next)
+	{
+		if (last->pix_y < highest->pix_y)
+			highest = last;
+		if (last->pix_y > lowest->pix_y)
+			lowest = last;
+		last = last->next;
+	}
+	if (lowest->pix_y > WINY * 0.1 && highest->pix_y < WINY * 0.9 &&
+	first->pix_x < WINX * 0.9 && last->pix_x > WINX * 0.1)
+		return (1);
+	printf("BOUNDRY CHECK FAILED\n");
+	return (0);
 }

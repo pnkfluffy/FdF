@@ -6,7 +6,7 @@
 #    By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 23:24:55 by jfelty            #+#    #+#              #
-#    Updated: 2019/09/28 17:49:39 by jfelty           ###   ########.fr        #
+#    Updated: 2019/09/30 16:46:45 by jfelty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,11 @@ LIBFT = libft/libft.a
 SRC =	fdf.c \
 		get_shit.c \
 		allign_shit.c \
-		calc_shit.c \
+		start_shit.c \
 		draw_shit.c \
 		hook_shit.c \
-		line_shit.c
+		line_shit.c \
+		re_shit.c
 
 all: $(NAME)
 
