@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 00:23:22 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/30 16:56:29 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/10/01 17:20:13 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_grid		*initialize_grid(t_pnt *head)
 		return (0);
 	if (!(grid->win = mlx_new_window(grid->mlx, WINX, WINY, "mlx 42")))
 		return (0);
+	grid->first_pnt = head;
 	grid->max_x = WINX;
 	grid->max_y = WINY;
 	grid->height = HEIGHTSCALE;
@@ -65,7 +66,8 @@ int			main(int ac, char **av)
 			ft_putstr("error\n");
 		return (0);
 	}
-	head = convert_check(fd);
+	if (!(head = convert_check(fd)))
+		return (0);
 	grid = initialize_grid(head);
 	draw_lines(populate_lines(head, grid));
 	mlx_loop(grid->mlx);

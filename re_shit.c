@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 16:44:01 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/30 22:29:11 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/10/01 17:22:05 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	re_translate(t_grid *grid, int x, int y)
 	t_pnt	*pnt;
 	t_line	*line;
 
-	pnt = grid->first_line->p1;
+	pnt = grid->first_pnt;
 	line = grid->first_line;
 	while (pnt)
 	{
@@ -39,7 +39,7 @@ void	re_scale(t_grid *grid, double x)
 	t_pnt	*pnt;
 	t_pnt	*first;
 
-	first = grid->first_line->p1;
+	first = grid->first_pnt;
 	pnt = first;
 	while (pnt->next)
 		pnt = pnt->next;
@@ -67,7 +67,7 @@ void	re_height(t_grid *grid, double height, double drift)
 
 	grid->height += height;
 	grid->heightdrift += drift;
-	pnt = grid->first_line->p1;
+	pnt = grid->first_pnt;
 	while (pnt)
 	{
 		if (height)
@@ -89,7 +89,7 @@ void	re_angle(t_grid *grid, double x)
 {
 	t_pnt	*pnt;
 
-	pnt = grid->first_line->p1;
+	pnt = grid->first_pnt;
 	while (pnt)
 	{
 		pnt->pix_x += x * pnt->y;

@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:04:55 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/30 22:37:11 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/10/01 16:46:17 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	color_pts(t_pnt *head, int colorrand)
 	while (pnt)
 	{
 		pnt->color = (pnt->z == 0 ? 0xFFFFFF : (pnt->z * colorrand) % MAXCOLOR);
+		if (colorrand == 5000 && pnt->permcolor)
+			pnt->color = pnt->permcolor;
 		pnt = pnt->next;
 	}
 }
@@ -44,20 +46,20 @@ void	spoof_height(t_pnt *head, t_grid *grid)
 	}
 }
 
-void	spoof_cool_angle(t_pnt *head, t_grid *grid)
+void	spoof_cool_angle(t_pnt *head)
 {
 	t_pnt	*pnt;
 	t_pnt	*last;
 
-	grid->scale = 500;
 	pnt = head;
 	last = pnt;
 	while (last->next)
 		last = last->next;
+	if (last->x > 50)
+		return ;
 	while (pnt)
 	{
-		pnt->pix_x += last->x > 50 ? pnt->x * pnt->y / last->x : \
-		pnt->x * pnt->y;
+		pnt->pix_x += pnt->x * pnt->y;
 		pnt = pnt->next;
 	}
 }

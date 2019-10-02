@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 02:30:25 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/30 16:57:35 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/10/01 00:02:02 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@ t_pnt	*populate(int x, int y, char *z, t_pnt *above)
 	pnt->down = NULL;
 	pnt->next = NULL;
 	pnt->color = (int)NULL;
+	pnt->permcolor = 0;
 	if (pnt->z == 0)
 		pnt->color = 0xFFFFFF;
 	if (above)
 		above->down = pnt;
 	if ((hexcolor = ft_strchr(z, ',')) != NULL)
-		pnt->color = ft_atoi_base(hexcolor + 3, 16);
+	{
+		pnt->permcolor = ft_atoi_base(hexcolor + 3, 16);
+	}
 	return (pnt);
 }
 

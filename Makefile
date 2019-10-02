@@ -6,7 +6,7 @@
 #    By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 23:24:55 by jfelty            #+#    #+#              #
-#    Updated: 2019/09/30 16:46:45 by jfelty           ###   ########.fr        #
+#    Updated: 2019/10/01 17:05:09 by jfelty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,10 @@ SRC =	fdf.c \
 
 all: $(NAME)
 
-$(NAME): lib out
+$(NAME): lib mlx out
+
+mlx:
+	@make -C minilibx_macos
 
 lib:
 	@make -C libft
@@ -41,12 +44,13 @@ lib:
 #uses make command in library
 
 out:
-	@$(CC) $(CFLAGS) $(SRC) $(MLXLIB) $(LIBFT) $(MLXFLAGS) -fsanitize=address -g -o fdf
+	@$(CC) $(CFLAGS) $(SRC) $(MLXLIB) $(LIBFT) $(MLXFLAGS) -o fdf
 	@echo "FdF Generation Complete"
 
 clean:
 	@rm -f $(OBJ)
 	@make -C libft/ clean
+	@make -C minilibx_macos/ clean
 
 fclean: clean
 	@rm -f $(NAME)
@@ -54,4 +58,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: lib out clean all fclean re fdf
+.PHONY: lib out clean all fclean re fdf mlx

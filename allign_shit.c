@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 00:33:43 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/30 20:32:54 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/10/01 17:21:28 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		boundary_check(t_grid *grid)
 	t_pnt	*highest;
 	t_pnt	*lowest;
 
-	first = grid->first_line->p1;
+	first = grid->first_pnt;
 	last = first;
 	highest = first;
 	lowest = first;
@@ -84,6 +84,6 @@ int		boundary_check(t_grid *grid)
 	if (lowest->pix_y > WINY * 0.1 && highest->pix_y < WINY * 0.9 &&
 	first->pix_x < WINX * 0.9 && last->pix_x > WINX * 0.1)
 		return (1);
-	printf("BOUNDRY CHECK FAILED\n");
+	ft_putstr("BOUNDRY CHECK FAILED\n");
 	return (0);
 }

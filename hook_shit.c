@@ -6,7 +6,7 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 16:23:04 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/30 20:37:01 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/10/01 17:21:11 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	re_set(t_grid *grid, int key)
 {
 	t_pnt	*head;
 
-	head = grid->first_line->p1;
+	head = grid->first_pnt;
 	grid->height = HEIGHTSCALE;
 	grid->heightdrift = HEIGHTDRIFT;
 	grid->scale = calc_scale(head, grid);
@@ -24,7 +24,7 @@ void	re_set(t_grid *grid, int key)
 	scale_grid(head, grid);
 	center_grid(head, grid);
 	spoof_height(head, grid);
-	(key == 15) ? spoof_angle(head, grid) : spoof_cool_angle(head, grid);
+	(key == 15) ? spoof_angle(head, grid) : spoof_cool_angle(head);
 	recalc_lines(grid->first_line);
 	re_draw(grid);
 }
@@ -35,7 +35,7 @@ void	re_view(t_grid *grid, int key)
 	t_pnt	*head;
 
 	img = grid->img;
-	head = grid->first_line->p1;
+	head = grid->first_pnt;
 	if (key == 21 || key == 23)
 		key == 21 ? color_pts(head, rand()) : color_pts(head, 5000);
 	else
@@ -48,9 +48,9 @@ void	re_draw(t_grid *grid)
 	if (grid->render == 0)
 		draw_lines(grid);
 	if (grid->render == 1)
-		draw_points(grid->first_line->p1, grid);
+		draw_points(grid->first_pnt, grid);
 	if (grid->render == 2)
-		draw_phat_points(grid->first_line->p1, grid);
+		draw_phat_points(grid->first_pnt, grid);
 }
 
 int		hook_key(int key, t_grid *grid)
