@@ -18,3 +18,5 @@ To Do:
 	-implementation of Wu's line algorithm for anti-aliasing
 
 ![FdF Screenshot](https://cdn.discordapp.com/attachments/613478885174018084/650516404071694416/unknown.png)
+
+![FdF Screenshot 2](https://media.discordapp.net/attachments/613478885174018084/628491975263387667/unknown.png)
