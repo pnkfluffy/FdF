@@ -6,11 +6,11 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 02:30:25 by jfelty            #+#    #+#             */
-/*   Updated: 2019/10/01 00:02:02 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/11/30 17:18:46 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 t_pnt	*populate(int x, int y, char *z, t_pnt *above)
 {

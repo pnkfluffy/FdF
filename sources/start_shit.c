@@ -6,11 +6,11 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:04:55 by jfelty            #+#    #+#             */
-/*   Updated: 2019/10/01 16:46:17 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/11/30 17:18:51 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 void	color_pts(t_pnt *head, int colorrand)
 {

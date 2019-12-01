@@ -6,11 +6,11 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 00:23:22 by jfelty            #+#    #+#             */
-/*   Updated: 2019/10/01 17:20:13 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/11/30 17:16:37 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 void		initialize_image(t_grid *grid)
 {

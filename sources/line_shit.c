@@ -6,11 +6,11 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:46:38 by jfelty            #+#    #+#             */
-/*   Updated: 2019/09/30 22:36:26 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/11/30 17:18:43 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 t_line	*add_line(t_line *line, t_pnt *pnt1, t_pnt *pnt2)
 {

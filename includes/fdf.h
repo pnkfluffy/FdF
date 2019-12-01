@@ -6,14 +6,14 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 21:58:24 by jfelty            #+#    #+#             */
-/*   Updated: 2019/10/01 17:19:17 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/11/30 17:17:02 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# include "libft/libft.h"
-# include "minilibx_macos/mlx.h"
+# include "../sources/libft/libft.h"
+# include "../minilibx_macos/mlx.h"
 # include <math.h>
 # include <fcntl.h>
 # include <limits.h>

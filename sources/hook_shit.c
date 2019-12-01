@@ -6,11 +6,11 @@
 /*   By: jfelty <jfelty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 16:23:04 by jfelty            #+#    #+#             */
-/*   Updated: 2019/10/01 17:21:11 by jfelty           ###   ########.fr       */
+/*   Updated: 2019/11/30 17:18:40 by jfelty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 void	re_set(t_grid *grid, int key)
 {
