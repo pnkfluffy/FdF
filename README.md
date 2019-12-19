@@ -1,4 +1,4 @@
-This project is a wireframe mesh '3d' object renderer. It takes text files such as those in the test_maps file, in which the there are numbers placed around a board which correspond to the locations y value (height). The project can be compiled using make, and run using ./fdf [map_text_file]. Or for example './fdf test_maps/extra/t1.fdf'.
+This project is a wireframe mesh '3d' object renderer. It takes text files such as those in the test_maps file, in which the there are numbers placed around a board which correspond to the locations y value (height). The project can be compiled using make, and run using ./fdf [map_text_file]. Or for example './fdf test_maps/extra/t1.fdf'. Currently only works on MacOS.
 
 Controls:
 
@@ -12,7 +12,8 @@ Controls:
 
 To Do:
 
-	-true 3d rendering (not spoofed 3d)
+	-add linux support
+	-true 3d rendering
 	-better -custom controlled RGB based- color selection
 	-smooth color gradients between points
 	-implementation of Wu's line algorithm for anti-aliasing
